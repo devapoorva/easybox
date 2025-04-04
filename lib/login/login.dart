@@ -61,7 +61,7 @@ class LoginForm extends StatefulWidget {
                       SizedBox(height: 20),
                       TextFormField(
                         controller: controller.passwordController.value,
-                        obscureText: _obscureText,  
+                        obscureText: _obscureText,
                         decoration: InputDecoration(
                           labelText: "Password",
                           prefixIcon: Icon(Icons.lock),
