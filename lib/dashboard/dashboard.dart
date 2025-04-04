@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import '../form/farmData.dart';
 
 class Dashboard extends StatefulWidget {
+  const Dashboard({super.key});
+
   @override
   _DashboardState createState() => _DashboardState();
 }

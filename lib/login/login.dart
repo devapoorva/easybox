@@ -61,7 +61,7 @@ class LoginForm extends StatefulWidget {
                       SizedBox(height: 20),
                       TextFormField(
                         controller: controller.passwordController.value,
-                        obscureText: _obscureText, // ✅ Use the variable here
+                        obscureText: _obscureText,  
                         decoration: InputDecoration(
                           labelText: "Password",
                           prefixIcon: Icon(Icons.lock),
@@ -71,7 +71,7 @@ class LoginForm extends StatefulWidget {
                             ),
                             onPressed: () {
                               setState(() {
-                                _obscureText = !_obscureText; // ✅ Toggle password visibility
+                                _obscureText = !_obscureText;
                               });
                             },
                           ),
@@ -80,24 +80,24 @@ class LoginForm extends StatefulWidget {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: () {
-                            controller.loginApi();
-                             controller.loginSession();
-                            controller.skipLogin();
+                        onPressed: controller.isLoading.value
+                            ? null
+                            : () {
+                          controller.loginApi();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue.shade700,
-                          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 50),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
                         ),
-                        child: Text(
-                          "Login",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
+                        child: Obx(() => controller.isLoading.value
+                            ? const CircularProgressIndicator(color: Colors.white)
+                            : const Text("Login", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        )),
                       ),
                     ],
                   ),

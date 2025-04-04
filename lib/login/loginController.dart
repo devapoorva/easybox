@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:easybox/dashboard/dashboard.dart';
-import 'package:easybox/form/farmData.dart';
+import 'package:easybox/helper/shared_prefs_helper.dart';
 import 'package:easybox/login/login.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
@@ -12,20 +11,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LoginController extends GetxController {
   final emailController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
+  var isLoading = false.obs;
 
   String loginkey="isLogin";
   bool? isLogin=false;
 
-  @override
-  void onInit()
-  {
-    super.onInit();
-    skipLogin();
+  Future<void> handleLogin(Map<String, dynamic> response) async {
+    if (response.containsKey('user') && response.containsKey('token')) {
+      String email = response['user']['email'];
+      String token = response['token'];
+      await SharedPrefsHelper.setLoggedIn(true);
+      await SharedPrefsHelper.setEmail(email);
+      await SharedPrefsHelper.setToken(token);
+      Get.offAll(() => Dashboard());
+    }
   }
 
 
   void loginApi() async {
     try {
+      isLoading.value = true;
       final response = await post(
         Uri.parse('https://www.easybox.in/Dataentry/api/login'),
         body: {
@@ -35,17 +40,18 @@ class LoginController extends GetxController {
       );
 
       var data = jsonDecode(response.body);
-      print(response.statusCode);
       print(data);
 
       if (response.statusCode == 200) {
+        isLoading.value = false;
+        handleLogin(data);
         _showSuccessSnackbar(
           title: "Login Successful",
           message: 'Welcome to EasyBox!',
           icon: Icons.check_circle,
         );
-        Get.offAll(() => Dashboard());
       } else {
+        isLoading.value = false;
         _showErrorSnackbar(
           title: "Login Failed",
           message: data['error'] ?? 'Invalid credentials',
@@ -53,18 +59,13 @@ class LoginController extends GetxController {
         );
       }
     } catch (e) {
+      isLoading.value = false;
       _showErrorSnackbar(
         title: "Error Occurred",
         message: 'An unexpected error occurred',
         icon: Icons.warning_amber_rounded,
       );
     }
-  }
-
-  void loginSession ()async
-  {
-    final SharedPreferences prefs= await SharedPreferences.getInstance();
-    prefs.setBool(loginkey, true);
   }
 
   void skipLogin()async
@@ -82,13 +83,13 @@ class LoginController extends GetxController {
       }
   }
 
-  void logout()async
-  {
-    final SharedPreferences prefs =await SharedPreferences.getInstance();
-    prefs.setBool(loginkey, false);
-
-    Get.offAll(() => LoginForm());
+  Future<void> logout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(loginkey, false);
+    await prefs.remove("token");
+    Get.offAllNamed("/login");
   }
+
 
   void _showSuccessSnackbar({required String title, required String message, required IconData icon}) {
     Get.snackbar(
