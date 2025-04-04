@@ -2,14 +2,27 @@ import 'dart:convert';
 
 import 'package:easybox/dashboard/dashboard.dart';
 import 'package:easybox/form/farmData.dart';
+import 'package:easybox/login/login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   final emailController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
+
+  String loginkey="isLogin";
+  bool? isLogin=false;
+
+  @override
+  void onInit()
+  {
+    super.onInit();
+    skipLogin();
+  }
+
 
   void loginApi() async {
     try {
@@ -31,7 +44,7 @@ class LoginController extends GetxController {
           message: 'Welcome to EasyBox!',
           icon: Icons.check_circle,
         );
-        Get.to(Dashboard());
+        Get.offAll(() => Dashboard());
       } else {
         _showErrorSnackbar(
           title: "Login Failed",
@@ -46,6 +59,35 @@ class LoginController extends GetxController {
         icon: Icons.warning_amber_rounded,
       );
     }
+  }
+
+  void loginSession ()async
+  {
+    final SharedPreferences prefs= await SharedPreferences.getInstance();
+    prefs.setBool(loginkey, true);
+  }
+
+  void skipLogin()async
+  {
+    final SharedPreferences prefs= await SharedPreferences.getInstance();
+    isLogin=prefs.getBool(loginkey);
+    print(isLogin);
+    if(isLogin==true)
+      {
+        Get.to(Dashboard());
+      }
+    else
+      {
+       Get.to(LoginForm());
+      }
+  }
+
+  void logout()async
+  {
+    final SharedPreferences prefs =await SharedPreferences.getInstance();
+    prefs.setBool(loginkey, false);
+
+    Get.offAll(() => LoginForm());
   }
 
   void _showSuccessSnackbar({required String title, required String message, required IconData icon}) {

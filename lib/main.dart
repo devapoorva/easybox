@@ -1,3 +1,4 @@
+import 'package:easybox/dashboard/dashboard.dart';
 import 'package:easybox/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,7 +29,9 @@ class MyApp extends StatelessWidget {
 getPages: [
   GetPage(name: "/", page: ()=>Home1()),
   GetPage(name: "/login", page: ()=>LoginForm()),
+  GetPage(name: "/dashboard", page: ()=>Dashboard()),
   GetPage(name: "/form", page: ()=>MyForm()),
+
 
 ],
     );

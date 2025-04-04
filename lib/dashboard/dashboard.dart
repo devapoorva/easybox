@@ -1,3 +1,4 @@
+import 'package:easybox/login/loginController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +10,8 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+
+  LoginController loginController=Get.put(LoginController());
   // List of button data (icon, title, and color)
   final List<Map<String, dynamic>> buttons = [
     {
@@ -64,7 +67,18 @@ class _DashboardState extends State<Dashboard> {
         title: Text('Dashboard'),
         centerTitle: true,
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+             loginController.logout();
+              // Ya jo bhi login route hai
+            },
+            tooltip: 'Logout',
+          ),
+        ],
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: GridView.builder(

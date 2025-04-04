@@ -5,9 +5,9 @@ import 'loginController.dart';
 class LoginForm extends StatefulWidget {
   @override
   _LoginFormState createState() => _LoginFormState();
-}
+ }
 
-class _LoginFormState extends State<LoginForm> {
+ class _LoginFormState extends State<LoginForm> {
   LoginController controller = Get.put(LoginController());
   bool _obscureText = true; // ✅ Add this state variable
 
@@ -83,7 +83,9 @@ class _LoginFormState extends State<LoginForm> {
                       SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
-                          controller.loginApi();
+                            controller.loginApi();
+                             controller.loginSession();
+                            controller.skipLogin();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue.shade700,

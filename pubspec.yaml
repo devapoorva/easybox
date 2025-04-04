@@ -23,6 +23,7 @@ dependencies:
   # Icons
   cupertino_icons: ^1.0.6
   get: ^4.7.2
+  shared_preferences: ^2.2.0
   modal_progress_hud_nsn: ^0.3.0
 
 dev_dependencies:
