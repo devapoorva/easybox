@@ -2,10 +2,9 @@ import 'package:easybox/dashboard/dashboard.dart';
 import 'package:easybox/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'form/farmData.dart';
-import 'home.dart';
+import 'splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,14 +25,12 @@ class MyApp extends StatelessWidget {
             useMaterial3: false,
       ),
       initialRoute: "/",
-getPages: [
-  GetPage(name: "/", page: ()=>Home1()),
-  GetPage(name: "/login", page: ()=>LoginForm()),
-  GetPage(name: "/dashboard", page: ()=>Dashboard()),
-  GetPage(name: "/form", page: ()=>MyForm()),
-
-
-],
+      getPages: [
+        GetPage(name: "/", page: ()=>const SplashView()),
+        GetPage(name: "/login", page: ()=>LoginForm()),
+        GetPage(name: "/dashboard", page: ()=>Dashboard()),
+        GetPage(name: "/form", page: ()=>MyForm()),
+      ],
     );
   }
 }
