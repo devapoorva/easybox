@@ -1,21 +1,20 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'form/farmData.dart';
 import 'login/login.dart';
 
-class Home1 extends StatefulWidget {
-  const Home1({Key? key}) : super(key: key);
+class SplashView extends StatefulWidget {
+  const SplashView({super.key});
 
   @override
-  State<Home1> createState() => _Home1State();
+  State<SplashView> createState() => _SplashViewState();
 }
 
-class _Home1State extends State<Home1> {
+class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
 
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LoginForm()),
