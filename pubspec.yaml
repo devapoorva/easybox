@@ -1,0 +1,47 @@
+name: easybox
+description: "A new Flutter project."
+
+publish_to: 'none' # Prevents accidental publishing to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.4 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  connectivity_plus: ^2.0.2
+
+  # Networking & API
+  http: ^0.13.6  # Updated version
+
+  # State Management
+
+
+  # Icons
+  cupertino_icons: ^1.0.6
+  get: ^4.7.2
+  modal_progress_hud_nsn: ^0.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # Linting & Best Practices
+  flutter_lints: ^3.0.0
+
+  # Flutter Launcher Icons
+  flutter_launcher_icons: ^0.13.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/favicon.ico"
